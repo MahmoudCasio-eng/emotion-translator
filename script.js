@@ -7,19 +7,39 @@ Promise.all([
     alert("حدث خطأ في تحميل نماذج الذكاء الاصطناعي!");
 });
 
-// تشغيل الكاميرا مع طلب الإذن
+// تشغيل الكاميرا والتأكد من الإذن
 async function startVideo() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        document.getElementById('permission-message').style.display = 'none';
         const video = document.getElementById('video');
         video.srcObject = stream;
-        video.onloadedmetadata = () => video.play();
     } catch (err) {
-        document.getElementById('permission-message').style.display = 'block';
-        console.error("تم رفض الإذن:", err);
+        console.error("خطأ في تشغيل الكاميرا:", err);
+        alert("⚠️ الرجاء السماح باستخدام الكاميرا من إعدادات المتصفح!");
     }
 }
+
+// استدعاء الدالة بعد تحميل الصفحة
+document.addEventListener("DOMContentLoaded", () => {
+    startVideo();
+});
+// تشغيل الكاميرا والتأكد من الإذن
+async function startVideo() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const video = document.getElementById('video');
+        video.srcObject = stream;
+    } catch (err) {
+        console.error("خطأ في تشغيل الكاميرا:", err);
+        alert("⚠️ الرجاء السماح باستخدام الكاميرا من إعدادات المتصفح!");
+    }
+}
+
+// استدعاء الدالة بعد تحميل الصفحة
+document.addEventListener("DOMContentLoaded", () => {
+    startVideo();
+});
+
 
 // زر الكشف عن المشاعر
 document.getElementById('detect-btn').addEventListener('click', async () => {
